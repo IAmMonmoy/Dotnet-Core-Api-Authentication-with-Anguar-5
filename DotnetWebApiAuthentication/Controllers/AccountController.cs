@@ -4,29 +4,29 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using DotnNetWebApiAuthentication.Data;
 using DotnNetWebApiAuthentication.Models;
+using DotnNetWebApiAuthentication.ViewModels;
+using DotnNetWebApiAuthentication.Intefaces;
 
 namespace DotnNetWebApiAuthentication.Controllers
 {
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _appDbcontext;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AccountController(IAccountService accountService)
         {
-            _appDbcontext = context;
-            _userManager = userManager;
+            _accountService = accountService;
         }
 
         [HttpPost("register")]
-        public Task<IActionResult> Post()
+        public Task<IActionResult> Post(RegistrationViewModel model)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost("login")]
-        public Task<IActionResult> Post(int x)
+        public Task<IActionResult> Post(LoginViewModel model)
         {
             throw new NotImplementedException();
         }

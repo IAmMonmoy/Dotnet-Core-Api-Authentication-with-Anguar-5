@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shopping_Cart_Api.ViewModels
+namespace DotnNetWebApiAuthentication.ViewModels
 {
     public class LoginViewModel
     {

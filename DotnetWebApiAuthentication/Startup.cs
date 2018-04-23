@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using DotnNetWebApiAuthentication.Data;
+using DotnNetWebApiAuthentication.Services;
+using DotnNetWebApiAuthentication.Intefaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet_Core_Api_Authentication_with_Anguar_5
@@ -28,6 +30,8 @@ namespace Dotnet_Core_Api_Authentication_with_Anguar_5
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddTransient<IAccountService,AccountServices>();
             
             services.AddMvc();
         }
