@@ -20,9 +20,15 @@ namespace DotnNetWebApiAuthentication.Controllers
         }
 
         [HttpPost("register")]
-        public Task<IActionResult> Post(RegistrationViewModel model)
+        public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
-            throw new NotImplementedException();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool result = await _accountService.addUser(model);
+            
+             if(!result) return BadRequest();
+             return Ok();
         }
 
         [HttpPost("login")]
