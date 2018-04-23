@@ -31,5 +31,10 @@ namespace DotnNetWebApiAuthentication.Services
                 return false;
             }
         }
+
+        public Task<string> authenticateUser(LoginViewModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
