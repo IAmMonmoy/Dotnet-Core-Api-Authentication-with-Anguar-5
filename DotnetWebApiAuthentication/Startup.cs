@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using DotnNetWebApiAuthentication.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet_Core_Api_Authentication_with_Anguar_5
 {
@@ -23,6 +25,10 @@ namespace Dotnet_Core_Api_Authentication_with_Anguar_5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
+            
             services.AddMvc();
         }
 
