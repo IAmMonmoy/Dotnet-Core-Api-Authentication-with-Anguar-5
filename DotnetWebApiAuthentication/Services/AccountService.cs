@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using DotnNetWebApiAuthentication.ViewModels;
 using DotnNetWebApiAuthentication.Intefaces;
 using DotnNetWebApiAuthentication.Data;
 using DotnNetWebApiAuthentication.Models;
+using DotnNetWebApiAuthentication.Helpers;
 
 namespace DotnNetWebApiAuthentication.Services
 {
@@ -19,17 +21,16 @@ namespace DotnNetWebApiAuthentication.Services
             _userManager = userManager;
         }
 
-        public async Task<bool> addUser(RegistrationViewModel model)
+        public async Task<IdentityResult> addUser(RegistrationViewModel model)
         {
             var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-            try{
-                var result = await _userManager.CreateAsync(user,model.Password);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+           
+            var result = await _userManager.CreateAsync(user,model.Password);
+            
+            if(result.Succeeded) await _userManager.AddToRoleAsync(user, Constants.Strings.UserRolls.SimpleUser);
+            else return result;
+
+            return IdentityResult.Success;
         }
 
         public Task<string> authenticateUser(LoginViewModel model)

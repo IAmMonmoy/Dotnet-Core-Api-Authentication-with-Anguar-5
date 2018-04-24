@@ -25,9 +25,9 @@ namespace DotnNetWebApiAuthentication.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            bool result = await _accountService.addUser(model);
+            IdentityResult result = await _accountService.addUser(model);
             
-             if(!result) return BadRequest();
+             if(!result.Succeeded) return BadRequest(result);
              return Ok();
         }
 
