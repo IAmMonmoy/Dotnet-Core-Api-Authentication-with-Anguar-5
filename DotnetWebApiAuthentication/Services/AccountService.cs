@@ -23,14 +23,22 @@ namespace DotnNetWebApiAuthentication.Services
 
         public async Task<IdentityResult> addUser(RegistrationViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+            try{
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
            
-            var result = await _userManager.CreateAsync(user,model.Password);
-            
-            if(result.Succeeded) await _userManager.AddToRoleAsync(user, Constants.Strings.UserRolls.SimpleUser);
-            else return result;
+                var result = await _userManager.CreateAsync(user,model.Password);
+                
+                if(result.Succeeded) await _userManager.AddToRoleAsync(user, Constants.Strings.UserRolls.SimpleUser);
+                else return result;
 
-            return IdentityResult.Success;
+                return IdentityResult.Success;
+            }
+            
+            catch(Exception ex)
+            {
+                IdentityError error = new IdentityError { Code = ex.Source, Description = ex.Message };
+                return IdentityResult.Failed(error);
+            }
         }
 
         public Task<string> authenticateUser(LoginViewModel model)
