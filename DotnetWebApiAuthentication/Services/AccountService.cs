@@ -25,6 +25,15 @@ namespace DotnNetWebApiAuthentication.Services
         {
             try{
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+
+                //ef core does not checking for duplicate email for some reason
+                //this is failsafe
+                var testDuplicateEmail = await _userManager.FindByEmailAsync(model.Email);
+                if(testDuplicateEmail != null) 
+                {
+                    IdentityError error = new IdentityError { Code = "DuplicateEmail", Description = $"Email {model.Email} is already  taken" };
+                    return IdentityResult.Failed(error);
+                }
            
                 var result = await _userManager.CreateAsync(user,model.Password);
                 
