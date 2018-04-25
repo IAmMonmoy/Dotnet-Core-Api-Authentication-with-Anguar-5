@@ -8,6 +8,6 @@ namespace DotnNetWebApiAuthentication.Intefaces
     public interface IAccountService
     {
         Task<IdentityResult> addUser(RegistrationViewModel model);
-        Task<string> authenticateUser(LoginViewModel model);
+        Task<IdentityResult> authenticateUser(LoginViewModel model);
     }
 }

@@ -50,9 +50,38 @@ namespace DotnNetWebApiAuthentication.Services
             }
         }
 
-        public Task<string> authenticateUser(LoginViewModel model)
+        public async Task<IdentityResult> authenticateUser(LoginViewModel model)
         {
-            throw new NotImplementedException();
+            try {
+                if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+                {
+                    IdentityError error = new IdentityError { Code = "Null Exception", Description = "User name or password is null" };
+                    return IdentityResult.Failed(error);
+                }
+
+                var findUser = await _userManager.FindByEmailAsync(model.Email);
+
+                if(findUser != null)
+                {
+                    if(await _userManager.CheckPasswordAsync(findUser,model.Password))
+                        return IdentityResult.Success;
+                    else 
+                    {
+                        IdentityError error = new IdentityError { Code = "Wrong Password", Description = "Password Do not match" };
+                        return IdentityResult.Failed(error);
+                    }
+                }
+                else 
+                {
+                    IdentityError error = new IdentityError { Code = "Wrong Email", Description = "The email is not is the registered list" };
+                    return IdentityResult.Failed(error);
+                }
+            }
+            catch(Exception ex)
+            {
+                IdentityError error = new IdentityError { Code = ex.Source, Description = ex.Message };
+                return IdentityResult.Failed(error);
+            }
         }
     }
 }

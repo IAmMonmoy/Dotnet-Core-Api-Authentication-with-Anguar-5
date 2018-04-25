@@ -32,9 +32,15 @@ namespace DotnNetWebApiAuthentication.Controllers
         }
 
         [HttpPost("login")]
-        public Task<IActionResult> Post(LoginViewModel model)
+        public async Task<IActionResult> Post([FromBody]LoginViewModel model)
         {
-            throw new NotImplementedException();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            IdentityResult result = await _accountService.authenticateUser(model);
+            
+            if(!result.Succeeded) return BadRequest(result);
+             return Ok();
         }
     }
 
