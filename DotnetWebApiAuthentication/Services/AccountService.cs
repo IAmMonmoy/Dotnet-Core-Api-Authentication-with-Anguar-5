@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using DotnNetWebApiAuthentication.ViewModels;
 using DotnNetWebApiAuthentication.Intefaces;
 using DotnNetWebApiAuthentication.Data;
@@ -82,6 +84,12 @@ namespace DotnNetWebApiAuthentication.Services
                 IdentityError error = new IdentityError { Code = ex.Source, Description = ex.Message };
                 return IdentityResult.Failed(error);
             }
+        }
+
+        public Task<string> makeToken(LoginViewModel model)
+        {
+
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,5 +9,6 @@ namespace DotnNetWebApiAuthentication.Intefaces
     {
         Task<IdentityResult> addUser(RegistrationViewModel model);
         Task<IdentityResult> authenticateUser(LoginViewModel model);
+        Task<string> makeToken(LoginViewModel model);
     }
 }
