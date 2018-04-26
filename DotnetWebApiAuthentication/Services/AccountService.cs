@@ -16,11 +16,19 @@ namespace DotnNetWebApiAuthentication.Services
     {
         private readonly ApplicationDbContext _applicationDbcontext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IJwtBuilder _jwtBuilder;
 
-        public AccountServices(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager) 
+        public AccountServices(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager,
+                                IJwtBuilder jwtBuilder) 
         {
             _applicationDbcontext = applicationDbContext;
             _userManager = userManager;
+            _jwtBuilder = jwtBuilder;
+        }
+
+        public async Task<ApplicationUser> getApplicationUser(LoginViewModel model)
+        {
+            return await _userManager.FindByEmailAsync(model.Email);
         }
 
         public async Task<IdentityResult> addUser(RegistrationViewModel model)
@@ -61,7 +69,7 @@ namespace DotnNetWebApiAuthentication.Services
                     return IdentityResult.Failed(error);
                 }
 
-                var findUser = await _userManager.FindByEmailAsync(model.Email);
+                ApplicationUser findUser = await _userManager.FindByEmailAsync(model.Email);
 
                 if(findUser != null)
                 {
@@ -86,10 +94,13 @@ namespace DotnNetWebApiAuthentication.Services
             }
         }
 
-        public Task<string> makeToken(LoginViewModel model)
+        public async Task<string> makeToken(LoginViewModel model, ApplicationUser user)
         {
+            var claimsIdentity = await _jwtBuilder.GenerateClaimsIdentity(user);
+            
+            var token = await _jwtBuilder.GenerateEncodedToken(user.UserName,claimsIdentity);
 
-            throw new NotImplementedException();
+            return token;
         }
     }
 }

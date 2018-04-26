@@ -1,5 +1,6 @@
 using System;
 using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace DotnNetWebApiAuthentication.Helpers
 {
@@ -18,7 +19,7 @@ namespace DotnNetWebApiAuthentication.Helpers
 
         public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(120);
 
-        public string GernerateJti => Guid.NewGuid().ToString();
+        public Task<string> GenerateJti() { return Task.FromResult(Guid.NewGuid().ToString()); }
 
         public SigningCredentials SigningCredentials { get; set; }
     }

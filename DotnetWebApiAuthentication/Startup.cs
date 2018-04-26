@@ -39,6 +39,7 @@ namespace Dotnet_Core_Api_Authentication_with_Anguar_5
             .AddDefaultTokenProviders();
 
             services.AddTransient<IAccountService,AccountServices>();
+            services.AddTransient<IJwtBuilder,JwtBuilderService>();
 
             var JwtTokenSettings = Configuration.GetSection(nameof(JwtToken));
              var _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtTokenSettings[nameof(JwtToken.SigningCredentials)]));

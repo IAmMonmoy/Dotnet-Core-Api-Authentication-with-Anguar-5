@@ -40,7 +40,12 @@ namespace DotnNetWebApiAuthentication.Controllers
             IdentityResult result = await _accountService.authenticateUser(model);
             
             if(!result.Succeeded) return BadRequest(result);
-             return Ok();
+
+            var user = await _accountService.getApplicationUser(model);
+            
+            var jwtToken = await _accountService.makeToken(model, user);
+
+            return new OkObjectResult(jwtToken);
         }
     }
 
