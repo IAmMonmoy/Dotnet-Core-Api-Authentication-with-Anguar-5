@@ -10,7 +10,7 @@ namespace DotnNetWebApiAuthentication.Intefaces
     {
         Task<ApplicationUser> getApplicationUser(LoginViewModel model);
         Task<IdentityResult> addUser(RegistrationViewModel model);
-        Task<IdentityResult> authenticateUser(LoginViewModel model);
-        Task<string> makeToken(LoginViewModel model, ApplicationUser user);
+        Task<IdentityResult> authenticateUser(LoginViewModel model, ApplicationUser findUser);
+        Task<string> makeToken(ApplicationUser user);
     }
 }

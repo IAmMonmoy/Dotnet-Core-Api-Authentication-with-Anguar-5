@@ -36,14 +36,14 @@ namespace DotnNetWebApiAuthentication.Controllers
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
-            IdentityResult result = await _accountService.authenticateUser(model);
-            
-            if(!result.Succeeded) return BadRequest(result);
 
             var user = await _accountService.getApplicationUser(model);
             
-            var jwtToken = await _accountService.makeToken(model, user);
+            IdentityResult result = await _accountService.authenticateUser(model,user);
+            
+            if(!result.Succeeded) return BadRequest(result);
+            
+            var jwtToken = await _accountService.makeToken(user);
 
             return new OkObjectResult(jwtToken);
         }

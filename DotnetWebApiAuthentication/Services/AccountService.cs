@@ -60,7 +60,7 @@ namespace DotnNetWebApiAuthentication.Services
             }
         }
 
-        public async Task<IdentityResult> authenticateUser(LoginViewModel model)
+        public async Task<IdentityResult> authenticateUser(LoginViewModel model, ApplicationUser findUser)
         {
             try {
                 if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
@@ -68,8 +68,6 @@ namespace DotnNetWebApiAuthentication.Services
                     IdentityError error = new IdentityError { Code = "Null Exception", Description = "User name or password is null" };
                     return IdentityResult.Failed(error);
                 }
-
-                ApplicationUser findUser = await _userManager.FindByEmailAsync(model.Email);
 
                 if(findUser != null)
                 {
@@ -94,7 +92,7 @@ namespace DotnNetWebApiAuthentication.Services
             }
         }
 
-        public async Task<string> makeToken(LoginViewModel model, ApplicationUser user)
+        public async Task<string> makeToken(ApplicationUser user)
         {
             var claimsIdentity = await _jwtBuilder.GenerateClaimsIdentity(user);
             
