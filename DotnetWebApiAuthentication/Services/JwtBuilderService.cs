@@ -28,11 +28,12 @@ namespace DotnNetWebApiAuthentication.Services
         public async Task<ClaimsIdentity> GenerateClaimsIdentity(ApplicationUser user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
-
+        
             var claims = new List<Claim>(new[] {
                 new Claim("Id", user.Id)
             });
 
+            //add roles of user to the claim
             foreach(var roleName in userRoles)
             {
                 var role = await _roleManager.FindByNameAsync(roleName);
@@ -43,19 +44,21 @@ namespace DotnNetWebApiAuthentication.Services
                 }
             }
 
-            return new ClaimsIdentity(new GenericIdentity(user.UserName, "Token"), claims);
+            return new ClaimsIdentity(claims);
         }
 
         public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
         {
-            var claims = new[]
+            var claims = new List<Claim>(new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtToken.GenerateJti()),
                 new Claim(JwtRegisteredClaimNames.Iat, _jwtToken.IssuedAt.ToString()),
-                identity.FindFirst("Id"),
-                identity.FindFirst("Rol")
-            };
+                identity.FindFirst("Id")
+            });
+            
+            //add all the roles of the user
+            claims.AddRange(identity.FindAll("Rol"));
 
              var jwt = new JwtSecurityToken(
                 issuer: _jwtToken.Issuer,
