@@ -7,6 +7,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { AuthorizationModule } from './authorization/authorization.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     AuthenticationModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AuthorizationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
