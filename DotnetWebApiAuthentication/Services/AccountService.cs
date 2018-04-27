@@ -44,9 +44,10 @@ namespace DotnNetWebApiAuthentication.Services
                     IdentityError error = new IdentityError { Code = "DuplicateEmail", Description = $"Email {model.Email} is already  taken" };
                     return IdentityResult.Failed(error);
                 }
-           
+                
                 var result = await _userManager.CreateAsync(user,model.Password);
                 
+                //add SimpleUser role if role exists .. otherwise user is already added returns 200 status
                 if(result.Succeeded) await _userManager.AddToRoleAsync(user, Constants.Strings.UserRolls.SimpleUser);
                 else return result;
 
@@ -63,12 +64,6 @@ namespace DotnNetWebApiAuthentication.Services
         public async Task<IdentityResult> authenticateUser(LoginViewModel model, ApplicationUser findUser)
         {
             try {
-                if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-                {
-                    IdentityError error = new IdentityError { Code = "Null Exception", Description = "User name or password is null" };
-                    return IdentityResult.Failed(error);
-                }
-
                 if(findUser != null)
                 {
                     if(await _userManager.CheckPasswordAsync(findUser,model.Password))
