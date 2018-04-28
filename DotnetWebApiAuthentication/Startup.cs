@@ -41,6 +41,13 @@ namespace Dotnet_Core_Api_Authentication_with_Anguar_5
             services.AddTransient<IAccountService,AccountServices>();
             services.AddTransient<IJwtBuilder,JwtBuilderService>();
 
+            services.AddCors(options => 
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                                    builder => builder.WithOrigins("http://localhost:4200")
+                                    .AllowAnyHeader().AllowAnyMethod());
+            });
+
             var JwtTokenSettings = Configuration.GetSection(nameof(JwtToken));
              var _key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtTokenSettings[nameof(JwtToken.SigningCredentials)]));
             
@@ -99,6 +106,10 @@ namespace Dotnet_Core_Api_Authentication_with_Anguar_5
 
             //Create an account and make it administrator
             AssignAdminRole(userManager).Wait();
+
+            app.UseCors("AllowSpecificOrigin");
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }
