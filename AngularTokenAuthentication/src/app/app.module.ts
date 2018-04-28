@@ -9,6 +9,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthorizationModule } from './authorization/authorization.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AuthorizationModule } from './authorization/authorization.module';
     AuthenticationModule,
     AppRoutingModule,
     AuthorizationModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
