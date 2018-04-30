@@ -1,3 +1,51 @@
-<p>
-  register works!
-</p>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+      <div class="card">
+          <h5 class="card-header">Register</h5>
+          <div class="card-body">
+              <form [formGroup] = "registerForm" (ngSubmit) = "onSubmit()" novalidate>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="text" id="Email" class="form-control" [class.is-invalid]="registerForm.controls.Email.invalid && (registerForm.controls.Email.dirty || registerForm.controls.Email.touched)" formControlName="Email">
+                        <div *ngIf = "registerForm.controls.Email.errors?.required && (registerForm.controls.Email.dirty || registerForm.controls.Email.touched)" class="text-danger">
+                          <strong>Email field is required</strong>
+                        </div>
+                        <div *ngIf = "registerForm.controls.Email.errors?.email && (registerForm.controls.Email.dirty || registerForm.controls.Email.touched)" class="text-danger">
+                            <strong>Must be valid email</strong>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserName">UserName</label>
+                        <input type="text" id="UserName" class="form-control" [class.is-invalid]="registerForm.controls.UserName.invalid && (registerForm.controls.UserName.dirty || registerForm.controls.UserName.touched)" formControlName="UserName">
+                        <div *ngIf = "registerForm.controls.UserName.errors?.required && (registerForm.controls.UserName.dirty || registerForm.controls.UserName.touched)" class="text-danger">
+                          <strong>UserName field is required</strong>
+                        </div>
+                        <div *ngIf = "registerForm.controls.UserName.errors?.min && (registerForm.controls.UserName.dirty || registerForm.controls.UserName.touched)" class="text-danger">
+                            <strong>Must be at least 2 characters</strong>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input type="password" id="Password" class="form-control" [class.is-invalid]="registerForm.controls.Password.invalid && (registerForm.controls.Password.dirty || registerForm.controls.Password.touched)" formControlName="Password">
+                        <div *ngIf = "registerForm.controls.Password.errors?.required && (registerForm.controls.Password.dirty || registerForm.controls.Password.touched)" class="text-danger">
+                            <strong>Password field is required</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ConfirmPassword">ConfirmPassword</label>
+                        <input type="password" id="ConfirmPassword" class="form-control" [class.is-invalid]="registerForm.controls.ConfirmPassword.invalid && (registerForm.controls.ConfirmPassword.dirty || registerForm.controls.ConfirmPassword.touched)" formControlName="ConfirmPassword">
+                        <div *ngIf = "registerForm.controls.ConfirmPassword.errors?.required && (registerForm.controls.ConfirmPassword.dirty || registerForm.controls.ConfirmPassword.touched)" class="text-danger">
+                            <strong>Password field is required</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" [disabled]='!registerForm.valid' >
+                            Add
+                        </button>
+                    </div>
+              </form>
+           </div>
+        </div>
+    </div>
+</div>
