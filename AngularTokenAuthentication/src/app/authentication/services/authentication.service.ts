@@ -43,8 +43,8 @@ export class AuthenticationService extends BaseService {
         );
   }
 
-  storeToken()
+  storeToken(val)
   {
-    
+      localStorage.setItem('Token',val);
   }
 }

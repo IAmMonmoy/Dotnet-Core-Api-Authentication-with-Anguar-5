@@ -41,5 +41,7 @@ export class RegisterComponent implements OnInit {
       this._authService.register(this.registerModel).subscribe( val => {
           console.log(val);
       });
+
+      this.registerForm.reset();
   }
 }
