@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder ,FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
+import { Register } from '../models/Register';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class RegisterComponent implements OnInit {
 
   registerForm : FormGroup;
+  registerModel: Register;
 
   constructor(private fb: FormBuilder, private _authService: AuthenticationService) { }
 
@@ -26,5 +28,15 @@ export class RegisterComponent implements OnInit {
         ConfirmPassword : ['', Validators.required]
       }
     )
+  }
+
+  onSubmit()
+  {
+      this.registerModel = new Register();
+      this.registerModel.Email = this.registerForm.controls.Email.value;
+      this.registerModel.UserName = this.registerForm.controls.UserName.value;
+      this.registerModel.Password = this.registerForm.controls.Password.value;
+      this.registerModel.ConfirmPassword = this.registerForm.controls.ConfirmPassword.value;
+      console.log(this.registerModel);
   }
 }
