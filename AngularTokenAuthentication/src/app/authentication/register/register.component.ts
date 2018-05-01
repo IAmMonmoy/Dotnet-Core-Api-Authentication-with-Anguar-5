@@ -37,6 +37,9 @@ export class RegisterComponent implements OnInit {
       this.registerModel.UserName = this.registerForm.controls.UserName.value;
       this.registerModel.Password = this.registerForm.controls.Password.value;
       this.registerModel.ConfirmPassword = this.registerForm.controls.ConfirmPassword.value;
-      console.log(this.registerModel);
+      
+      this._authService.register(this.registerModel).subscribe( val => {
+          console.log(val);
+      });
   }
 }
