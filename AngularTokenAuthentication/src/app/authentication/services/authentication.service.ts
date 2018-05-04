@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BaseService } from './base.service';
 import { Register } from '../models/Register';
+import { responseTokenObject } from '../models/reponseTokenObject';
 
 @Injectable()
 export class AuthenticationService extends BaseService {
@@ -45,7 +46,9 @@ export class AuthenticationService extends BaseService {
 
   storeToken(val)
   {
-      localStorage.setItem('Token',val);
+      var responseObject = new responseTokenObject();
+      responseObject = eval(val);
+      localStorage.setItem('Token',responseObject.auth_token);
   }
 
   getToken()
