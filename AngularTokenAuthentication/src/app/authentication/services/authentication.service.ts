@@ -65,4 +65,9 @@ export class AuthenticationService extends BaseService {
   {
      return this.jwtHelper.decodeToken(this.getToken());
   }
+
+  deleteToken()
+  {
+     return localStorage.removeItem('Token');
+  }
 }
