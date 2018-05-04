@@ -60,4 +60,9 @@ export class AuthenticationService extends BaseService {
   {
       return !this.jwtHelper.isTokenExpired(this.getToken());
   }
+
+  decodeToken()
+  {
+     return this.jwtHelper.decodeToken(this.getToken());
+  }
 }

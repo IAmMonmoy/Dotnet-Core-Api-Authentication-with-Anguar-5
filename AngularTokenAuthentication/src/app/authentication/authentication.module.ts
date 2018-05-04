@@ -6,6 +6,7 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticationService } from './services/authentication.service';
+import { RoleGuardService } from './services/role-guard.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { AuthenticationService } from './services/authentication.service';
     ReactiveFormsModule
   ],
   declarations: [LoginComponent, RegisterComponent],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, RoleGuardService],
 })
 export class AuthenticationModule { }
