@@ -47,4 +47,14 @@ export class AuthenticationService extends BaseService {
   {
       localStorage.setItem('Token',val);
   }
+
+  getToken()
+  {
+      return localStorage.getItem('Token'); 
+  }
+
+  isAuthenticated()
+  {
+      return !this.jwtHelper.isTokenExpired(this.getToken());
+  }
 }
